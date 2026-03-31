@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+</head>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #eef2f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+body {
+  flex-direction: column;
+  text-align: center;
+}
+
+
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+input[type="number"] {
+  display: block;
+  margin: 10px auto 20px;   
+  padding: 6px;
+  text-align: center;
+}
+
+
+label {
+  display: block;
+  text-align: center;
+  margin: 5px 0;
+}
+
+
+button {
+ display: inline-block;
+  margin: 10px 5px;
+  padding: 8px 12px;
+  border: 1px solid;
+  background:blue;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  
+  
+}
+
+button:hover {
+  background:grey;
+}
+
+
+#out {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  word-break: break-all;
+}
+.btns{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+</style>
+<body>
+  <h2>Password Generator</h2>
+   Length: <input id="len" type="numbers" value="12" min="5"><br><br>
+  <label><input id="upper" type="checkbox" checked>UpperCase</label><br>
+  <label><input id="lower" type="checkbox" checked>LowerCase</label><br>
+  <label><input id="numbs" type="checkbox" checked>Numbers</label><br>
+  <label><input id="special" type="checkbox" checked>Special Characters</label><br><br>
+  <div class="btns">
+  <button onClick="gen()">Generate</button>
+  <button onclick="copy()">Copy</button>
+  <button onclick="resetAll()">Reset</button>
+  </div>
+  <p id="out"></p>
+  <script>
+    function generatePassword(length,useUpper,useLower,useNumbers,useSpecial){
+      const upper="ABCDEFGHIJKL";
+      const lower="abcdefghijkl";
+      const numbers="0123456789";
+      const special ="!@#$%^&*()";
+
+      let chars="";
+      if(useUpper)chars += upper;
+      if(useLower)chars += lower;
+      if(useNumbers)chars += numbers;
+      if(useSpecial)chars += special; 
+
+      let password ="";
+      for( let i=0;i<length;i++){
+      password += chars [Math.floor(Math.random()*chars.length)]
+    }
+return password;
+  }
+  function gen(){
+    const len = Number(document.getElementById("len").value);
+    const pw= generatePassword(
+      len,
+      document.getElementById("upper").checked,
+      document.getElementById("lower").checked,
+      document.getElementById("numbs").checked,
+      document.getElementById("special").checked
+    );
+    document.getElementById("out").textContent=pw;
+  }
+  function copy(){
+    const text=document.getElementById("out").textContent;
+    navigator.clipboard.writeText(text);
+    alert("copied!");
+  }
+function resetAll() {
+
+  document.getElementById("len").value = 12;
+
+  document.getElementById("upper").checked = true;
+  document.getElementById("lower").checked = true;
+  document.getElementById("numbs").checked = true;
+  document.getElementById("special").checked = true;
+
+
+  document.getElementById("out").textContent = "";
+}
+
+  </script>
+</body>
+</html> 
